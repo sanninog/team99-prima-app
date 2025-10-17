@@ -1,6 +1,23 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Outlet, useLocation } from "react-router-dom";
+import { AppProvider, Frame, Navigation } from "@shopify/polaris";
+import translations from "@shopify/polaris/locales/en.json";
 
 export default function App() {
+  const location = useLocation();
+
+  const navigationItems = [
+    {
+      label: "Home",
+      url: "/",
+      selected: location.pathname === "/",
+    },
+    {
+      label: "Products",
+      url: "/products",
+      selected: location.pathname === "/products",
+    },
+  ];
+
   return (
     <html lang="en">
       <head>
@@ -11,13 +28,18 @@ export default function App() {
           rel="stylesheet"
           href="https://cdn.shopify.com/static/fonts/inter/v4/styles.css"
         />
-        <Meta />
-        <Links />
+        <title>Team99 App</title>
       </head>
       <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
+        <AppProvider i18n={translations}>
+          <Frame
+            navigation={
+              <Navigation location={location.pathname} items={navigationItems} />
+            }
+          >
+            <Outlet />
+          </Frame>
+        </AppProvider>
       </body>
     </html>
   );
