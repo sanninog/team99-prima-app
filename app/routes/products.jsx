@@ -1,42 +1,10 @@
-import { useLoaderData } from "@remix-run/react";
-import { Card, Page, ResourceList, Text } from "@shopify/polaris";
-import { json } from "@remix-run/node";
-import { authenticate } from "../shopify.server";
+import { Page, Card, Text } from "@shopify/polaris";
 
-export const loader = async ({ request }) => {
-  const { session, admin } = await authenticate.admin(request);
-  const response = await admin.graphql(`
-    {
-      products(first: 10) {
-        edges {
-          node {
-            id
-            title
-          }
-        }
-      }
-    }
-  `);
-
-  const result = await response.json();
-  return json(result.data.products.edges.map(edge => edge.node));
-};
-
-export default function Products() {
-  const products = useLoaderData();
-
+export default function ProductsPage() {
   return (
     <Page title="Products">
       <Card>
-        <ResourceList
-          resourceName={{ singular: 'product', plural: 'products' }}
-          items={products}
-          renderItem={(item) => (
-            <ResourceList.Item id={item.id}>
-              <Text variant="bodyMd">{item.title}</Text>
-            </ResourceList.Item>
-          )}
-        />
+        <Text as="p">Here is your products page content.</Text>
       </Card>
     </Page>
   );

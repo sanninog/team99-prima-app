@@ -18,7 +18,7 @@ export default function App() {
       <s-app-nav>
         <s-link href="/app">Home</s-link>
         <s-link href="/app/additional">Additional page</s-link>
-        <ui-nav-item label="Products" to="/app/products" />
+        <s-link href="/app/products">Products</s-link>
       </s-app-nav>
       <Outlet />
     </AppProvider>
