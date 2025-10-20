@@ -1,7 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
-import { authenticate } from "../shopify.server";
 import { Card, Page, ResourceList, Text } from "@shopify/polaris";
 import { json } from "@remix-run/node";
+import { authenticate } from "../shopify.server";
 
 export const loader = async ({ request }) => {
   const { session, admin } = await authenticate.admin(request);
@@ -19,7 +19,6 @@ export const loader = async ({ request }) => {
   `);
 
   const result = await response.json();
-
   return json(result.data.products.edges.map(edge => edge.node));
 };
 
@@ -32,13 +31,11 @@ export default function Products() {
         <ResourceList
           resourceName={{ singular: 'product', plural: 'products' }}
           items={products}
-          renderItem={(item) => {
-            return (
-              <ResourceList.Item id={item.id}>
-                <Text variant="bodyMd">{item.title}</Text>
-              </ResourceList.Item>
-            );
-          }}
+          renderItem={(item) => (
+            <ResourceList.Item id={item.id}>
+              <Text variant="bodyMd">{item.title}</Text>
+            </ResourceList.Item>
+          )}
         />
       </Card>
     </Page>
